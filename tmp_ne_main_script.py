@@ -35,13 +35,14 @@ coast_process='no'
 usace_dredge_process='no'
 usace_dredge_process_reinterp='no'
 mb_process='no'
-nos_process='no'
+nos_process='yes'
 enc_process='no'
 dc_lidar_process='no'
 tnm_lidar_process='no'
-canada_lidar_process='yes'
+canada_lidar_process='no'
 ncei_dems_process='no'
 topo_guide_process='no'
+#
 bathy_surf_process='no'
 dem_process='no'
 spatial_meta_process='no'
@@ -500,7 +501,7 @@ if nos_process=='yes':
 	os.system('cp {}/create_datalist.sh nos_bag/xyz/navd88/create_datalist.sh'.format(code_dir))
 
 	print "executing nos_processing script"
-	os.system('./nos_processing.py {} {} {} {}'.format(study_area_shp, conv_grd_path, bs_dlist, dem_dlist))
+	os.system('./nos_processing.py {} {} {} {}'.format(roi_str_gmt, conv_grd_path, bs_dlist, dem_dlist))
 else:
 	print "Skipping NOS Processing"
 # ########################## ENC ################################

@@ -113,49 +113,50 @@ grid_dem=$dem_name".grd"
 mb_range="-R$west_reduced/$east_reduced/$south_reduced/$north_reduced"
 echo mb_range is $mb_range
 
-echo --Running mbgrid with no interpolation to test...
-mbgrid -I$datalist -O$dem_name \
-$mb_range \
--A2 -D$x_dim_int/$y_dim_int -G3 -N \
--C0 -S0 -F1
-
-# echo --Running mbgrid...
+# echo --Running mbgrid with no interpolation to test...
 # mbgrid -I$datalist -O$dem_name \
 # $mb_range \
 # -A2 -D$x_dim_int/$y_dim_int -G3 -N \
-# -C810000000/3 -S0 -F1 -T0.35 -X0.05
+# -C0 -S0 -F1
+
+echo --Running mbgrid...
+mbgrid -I$datalist -O$dem_name \
+$mb_range \
+-A2 -D$x_dim_int/$y_dim_int -G3 -N \
+-C810000000/3 -S0 -F1 -T0.35 -X0.05
 
 echo -- Converting to tif
 #gdal_translate $grid_dem -a_srs EPSG:4269 -a_nodata -99999 -co "COMPRESS=DEFLATE" -co "PREDICTOR=3" -co "TILED=YES" "tifs/"$name"_DEM.tif"
 gmt grdconvert $grid_dem "tifs/"$name"_DEM.tif"=gd:GTiff
 
 rm $grid_dem
+rm "tifs/"$name"_DEM.tif.aux.xml"
 
-# echo -- Smoothing Bathy in DEM
-# ./smooth_dem_bathy.py "tifs/"$name"_DEM.tif" -s $smooth_factor
-# mv "tifs/"$name"_DEM_smooth_"$smooth_factor".tif" "tifs/smoothed/"$name"_DEM_smooth_"$smooth_factor".tif"
+echo -- Smoothing Bathy in DEM
+./smooth_dem_bathy.py "tifs/"$name"_DEM.tif" -s $smooth_factor
+mv "tifs/"$name"_DEM_smooth_"$smooth_factor".tif" "tifs/smoothed/"$name"_DEM_smooth_"$smooth_factor".tif"
 
-# mv $name"_DEM.mb-1" save_mb1/$name"_DEM.mb-1"
-# mv $datalist save_datalists/$datalist
+mv $name"_DEM.mb-1" save_mb1/$name"_DEM.mb-1"
+mv $datalist save_datalists/$datalist
 
-# if [ -f $name"_DEM.grd.cmd" ]; then
-# 	echo "cmd file exists, move to subdir"
-# 	mv $name"_DEM.grd.cmd" cmd/$name"_DEM.grd.cmd"
-# else
-# 	echo "cmd file didn't exist"
-# fi
+if [ -f $name"_DEM.grd.cmd" ]; then
+	echo "cmd file exists, move to subdir"
+	mv $name"_DEM.grd.cmd" cmd/$name"_DEM.grd.cmd"
+else
+	echo "cmd file didn't exist"
+fi
 
 
-# echo "Identifying Potential Outliers"
-# echo "DEM is" "tifs/"$name"_DEM.tif"
-# rm -f thresholds.csv
-# echo "Calculating min and max thresholds from percentiles"
-# ./percentiles_minmax.py "tifs/"$name"_DEM.tif"
-# min_threshold=`awk -F, '{print $2}' thresholds.csv`
-# max_threshold=`awk -F, '{print $3}' thresholds.csv`
-# echo "Creating outliers shapefiles"
-# ./outliers_shp.sh "tifs/"$name"_DEM.tif" $min_threshold $max_threshold yes
-# echo
+echo "Identifying Potential Outliers"
+echo "DEM is" "tifs/"$name"_DEM.tif"
+rm -f thresholds.csv
+echo "Calculating min and max thresholds from percentiles"
+./percentiles_minmax.py "tifs/"$name"_DEM.tif"
+min_threshold=`awk -F, '{print $2}' thresholds.csv`
+max_threshold=`awk -F, '{print $3}' thresholds.csv`
+echo "Creating outliers shapefiles"
+./outliers_shp.sh "tifs/"$name"_DEM.tif" $min_threshold $max_threshold yes
+echo
 
 
 done
