@@ -123,7 +123,7 @@ echo --Running mbgrid...
 mbgrid -I$datalist -O$dem_name \
 $mb_range \
 -A2 -D$x_dim_int/$y_dim_int -G3 -N \
--C810000000/3 -S0 -F1 -T0.35 -X0.05
+-C810000000/3 -S0 -F1 -T1 -X0.05
 
 echo -- Converting to tif
 #gdal_translate $grid_dem -a_srs EPSG:4269 -a_nodata -99999 -co "COMPRESS=DEFLATE" -co "PREDICTOR=3" -co "TILED=YES" "tifs/"$name"_DEM.tif"

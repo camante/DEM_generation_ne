@@ -28,6 +28,8 @@ if [ ${#@} == 4 ];
 
 	#Create BS at 1 arc-sec
 	bs_res=0.00027777777
+	#Create BS at 1/3 arc-sec
+	#bs_res=0.00009259259
 	bs_extend=2
 
 	#############################################################################
@@ -235,7 +237,7 @@ if [ ${#@} == 4 ];
 	mbgrid -I$datalist -O$dem_name \
 	$mb_range \
 	-A2 -D$x_dim_int/$y_dim_int -G3 -N \
-	-C810000000/3 -S0 -F1 -T0.25 -X0.25
+	-C810000000/3 -S0 -F1 -T0.1 -X0.25
 
 	#Check to see if any valid data
 	z_min=`gmt grdinfo $grid_dem | grep -e "z_min" | awk '{print $3}'`

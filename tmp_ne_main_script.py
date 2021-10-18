@@ -35,7 +35,7 @@ coast_process='no'
 usace_dredge_process='no'
 usace_dredge_process_reinterp='no'
 mb_process='no'
-nos_process='yes'
+nos_process='no'
 enc_process='no'
 dc_lidar_process='no'
 tnm_lidar_process='no'
@@ -44,7 +44,7 @@ ncei_dems_process='no'
 topo_guide_process='no'
 #
 bathy_surf_process='no'
-dem_process='no'
+dem_process='yes'
 spatial_meta_process='no'
 final_dem_format_process='no'
 uncertainty_process='no'
@@ -154,7 +154,7 @@ for i in main_dir_list:
 		os.makedirs(i)
 
 #Creating main data subdirectories
-data_dir_list=[data_dir+'/bathy',data_dir+'/coast',data_dir+'/conv_grd',data_dir+'/dc_lidar',data_dir+'/topo/tnm_lidar',data_dir+'/topo/canada_lidar',data_dir+'/grids/ncei']
+data_dir_list=[data_dir+'/bathy',data_dir+'/coast',data_dir+'/conv_grd',data_dir+'/dc_lidar',data_dir+'/topo/tnm_lidar',data_dir+'/topo/canada_lidar',data_dir+'/grids/ncei',data_dir+'/topo/copern']
 for i in data_dir_list:
 	if not os.path.exists(i):
 		print 'creating subdir', i

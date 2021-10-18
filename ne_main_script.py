@@ -2,14 +2,14 @@
 
 '''
 Description:
-Master Script to Generate DEMs for TX and West LA. 
+Master Script to Generate DEMs for New England 
 
 Author:
 Christopher Amante
 Christopher.Amante@colorado.edu
 
 Date:
-9/18/2020
+4/1/2021
 
 '''
 #################################################################
@@ -41,13 +41,14 @@ dc_lidar_process='no'
 tnm_lidar_process='no'
 canada_lidar_process='no'
 ncei_dems_process='no'
-topo_guide_process='no'
+topo_guide_process='yes'
 #
-bathy_surf_process='no'
+bathy_surf_process='yes'
 dem_process='yes'
 spatial_meta_process='no'
-final_dem_format_process='no'
-uncertainty_process='no'
+final_dem_format_process='yes'
+#
+#uncertainty_process='no'
 #################################################################
 #################################################################
 #################################################################
@@ -106,7 +107,7 @@ conv_grd_path_cgvd2navd=manual_dir+'/data/conv_grd/cgvd2navd.tif'
 #
 #path to border dems to use in final formatting to ensure seamlessness
 #manually place other NCEI tifs that aren't yet on Digital Coast
-ncei_border_dems_path=manual_dir+'/data/grids/ncei/'
+ncei_border_dems_path=manual_dir+'/data/cudem/'
 ncei_border_dems_csv=ncei_border_dems_path+'ncei_dems_download_process.csv'
 resamp_res=0.00003086420
 #Lidar Download Variables
